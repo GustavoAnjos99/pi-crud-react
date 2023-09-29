@@ -1,18 +1,32 @@
+
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [Cadastro, SetCadastro] = useState({nome:'',email:''})
-  const [showElement, setShowElement] = useState(false)
-  const showOrHide = () => setShowElement(true)
+  const [Cadastro, SetCadastro] = useState({
+    id: 0,
+    nome:'',
+    email:''
+  })
 
-  function setNome(novoNome){
-    SetCadastro(...Cadastro, nome= novoNome)
+  const [showElement, setShowElement] = useState(false)
+  function showOrHide(e) {
+    setShowElement(true)
+    e.preventDefault()
   }
-  function setEmail(novoEmail){
-    SetCadastro(...Cadastro, email= novoEmail)
+
+  function ChangeName(e){
+    SetCadastro({
+    ...Cadastro,
+    nome: e.target.value
+    });
+  } 
+
+  function ChangeEmail(e){
+    SetCadastro({
+    ...Cadastro,
+    email: e.target.value
+    });
   }
 
 
@@ -20,26 +34,27 @@ function App() {
     <>
       <div>
         <form>
+
           <label>Nome:</label>
             <input 
               placeholder='Digite o nome' 
               value={Cadastro.nome} 
-              onChange={(e) => setNome(e.target.value)}>
+              onChange={ChangeName}>
             </input>
-          
+
           <label>Email:</label>
             <input
               placeholder='Digite o email' 
               type='email'    
               value={Cadastro.email} 
-              onChange={(e) => setEmail(e.target.value)}>
+              onChange={ChangeEmail}>
             </input>
 
 
           <button onClick={showOrHide}>Atualizar Cadastro</button>
+          
+          {showElement ? <h3>ID: {Cadastro.id+1} Nome: {Cadastro.nome} Email: {Cadastro.email}</h3> : null}
           </form>
-          {showElement ? <h3>Nome: {Cadastro.nome} Email: {Cadastro.email}</h3> : null}
-        
        </div> 
     </>
   )
